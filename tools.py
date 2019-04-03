@@ -45,18 +45,19 @@ class exchange(object):
         self.minsize = max(self.minq(self.t1), self.minq(self.t2))
         
         # 取引最小値の情報がどちらの取引所にもなかった場合、一旦ストップ
-        if self.minsize == 0:
-            print("error: No info about minimum order quantity")
-            raise
-        else:
+        #if self.minsize == 0:
+            #print("error: No info about minimum order quantity")
+        self.minsize == 0.0001 #BTCの場合のみ
+            #raise
             # 表示桁数を最小取引量から適当に決定
-            self.digits = max(int(-np.log10(self.minsize)), 0) + 1
-            
+        self.digits = 5
+        #self.digits = max(int(-np.log10(self.minsize)), 0) + 1
+        #else:
         # market_buy/sellが可能なリスト（暫定, 可能ならここにccxtコードを追記）
         # 取引所の売買およびccxtで成行注文（market_buyとsell）が実装されていないところがあるため、
         # そういう場合は「askの1.1倍のbuy」および「bidの0.9倍のsell」を出すことで擬似的に成行注文を成立させています。
         # 使っている取引所が対応している場合はこのリストに追加しておけばより動作が安定します。
-        self.market_order = ["binance", "hitbtc2"]
+        self.market_order = ["binance", "hitbtc2","liqud","bitbank"]
         
         # amountの離散化サイズを粗いほうで上書き
         # 取引の際、ccxtで取引量の離散化を行う処理を行う。離散化サイズが二つの取引所で異なる場合、粗いほうで統一する
